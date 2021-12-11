@@ -72,7 +72,6 @@ class EntGeoRest {
     }
 
 
-
     @Operation(summary = "recherche en fonction de id parent")
     @GetMapping("entgeo/parent/{id}")
     fun getEntGeosByParent(@PathVariable(value = "id") id: Long, request : HttpServletRequest):  ResponseEntity<Collection<EntGeo>> {
