@@ -30,6 +30,10 @@ interface IServices {
     fun findEntGeoById(id: Long): Optional<EntGeo>
 
     fun deleteEntGeoById(id: Long)
+
+    fun findByIdAndTypeEntGeo_Nom(id: Long, nom: String): Optional<EntGeo>
+
+    fun findByTypeEntGeo_Nom(nom: String): Collection<EntGeo>
     
     
 }

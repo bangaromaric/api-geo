@@ -19,5 +19,11 @@ interface EntGeoRepository : JpaRepository<EntGeo, Long> {
         typeEntGeo: TypeEntGeo
     ): Collection<EntGeo>
 
+
     fun findEntGeosByNomContainingIgnoreCase(nom: String): Collection<EntGeo>
+
+    fun findByIdAndTypeEntGeo_Nom(id: Long, nom: String): Optional<EntGeo>
+
+    fun findByTypeEntGeo_Nom(nom: String): Collection<EntGeo>
+
 }

@@ -67,5 +67,11 @@ class ServiceImpl : IServices {
         entGeoRepository.deleteById(id)
     }
 
+    override fun findByIdAndTypeEntGeo_Nom(id: Long, nom: String): Optional<EntGeo> {
+      return  entGeoRepository.findByIdAndTypeEntGeo_Nom(id,nom)
+    }
 
+    override fun findByTypeEntGeo_Nom(nom: String): Collection<EntGeo> {
+        return entGeoRepository.findByTypeEntGeo_Nom(nom)
+    }
 }

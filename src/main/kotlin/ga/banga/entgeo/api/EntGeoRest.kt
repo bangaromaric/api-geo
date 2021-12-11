@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest
 
 
 @CrossOrigin(origins = ["*"])
-@Tag( name = "EntGeos", description = "Entités geographique") // it description of api at top  http://localhost:8080/swagger-ui.html
+@Tag( name = "Utilitaires", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
 @RequestMapping("api/")
 class EntGeoRest {
@@ -29,51 +29,46 @@ class EntGeoRest {
 
 
 
-    @Operation(summary = "Liste EntGeos", description = "Permet de lister les EntGeos") //it description of api
-    @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "EntGeo trouvés", content = [
-            (Content(mediaType = "application/json", array = (
-                    ArraySchema(schema = Schema(implementation = EntGeo::class)))))]),
-        ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "Did not find any entgeo", content = [Content()])]
-    )
-    @GetMapping("entgeos")
-    fun entGeos(): ResponseEntity<Collection<EntGeo>> {
-    val result = iServices.findEntGeos()
-        return  if  (result.isEmpty())
-                    ResponseEntity(result,HttpStatus.NO_CONTENT)
-                else
-                    ResponseEntity(result,HttpStatus.OK)
-    }
-    @Operation(summary = "rechercher tous les pays")
-    @GetMapping("entgeo/pays")
-    fun entGeosByParentIsNull(): Collection<EntGeo>{
-        return iServices.findEntGeosByParentIsNull()
-    }
+//    @Operation(summary = "Liste EntGeos", description = "Permet de lister les pays, province") //it description of api
+//    @ApiResponses(value = [
+//        ApiResponse(responseCode = "200", description = "EntGeo trouvés", content = [
+//            (Content(mediaType = "application/json", array = (
+//                    ArraySchema(schema = Schema(implementation = EntGeo::class)))))]),
+//        ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
+//        ApiResponse(responseCode = "404", description = "Did not find any entgeo", content = [Content()])]
+//    )
+//    @GetMapping("entgeos")
+//    fun entGeos(): ResponseEntity<Collection<EntGeo>> {
+//    val result = iServices.findEntGeos()
+//        return  if  (result.isEmpty())
+//                    ResponseEntity(result,HttpStatus.NO_CONTENT)
+//                else
+//                    ResponseEntity(result,HttpStatus.OK)
+//    }
 
 
-    @Operation(summary = "rechercher par le nom de ville")
-    @GetMapping(value = ["entgeo/nom/{nom}"])
-    fun getEntGeosByNomContaining(@Parameter(description = "nom de la ville")
-                                  @PathVariable nom: String): Collection<EntGeo> {
-        val type: TypeEntGeo = iServices.findTypeEntGeoByNom("Ville").orElseThrow()
-        return iServices.findEntGeosByNomContaining(nom, type)
-    }
+//    @Operation(summary = "rechercher par le nom de ville")
+//    @GetMapping(value = ["entgeo/nom/{nom}"])
+//    fun getEntGeosByNomContaining(@Parameter(description = "nom de la ville")
+//                                  @PathVariable nom: String): Collection<EntGeo> {
+//        val type: TypeEntGeo = iServices.findTypeEntGeoByNom("Ville").orElseThrow()
+//        return iServices.findEntGeosByNomContaining(nom, type)
+//    }
 
-    @Operation(summary = "recherche par id")
-    @GetMapping("entgeo/{id}")
-    fun getEntGeoById(@Parameter(description = "son id")
-                      @PathVariable(value = "id") id: Long, request : HttpServletRequest): ResponseEntity<EntGeo> {
+//    @Operation(summary = "recherche par id")
+//    @GetMapping("entgeo/{id}")
+//    fun getEntGeoById(@Parameter(description = "son id")
+//                      @PathVariable(value = "id") id: Long, request : HttpServletRequest): ResponseEntity<EntGeo> {
+//
+//
+//        return iServices.findEntGeoById(id)
+//            .map { oldValue -> ResponseEntity<EntGeo>(oldValue, HttpStatus.OK) }
+//            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
+//    }
 
 
-        return iServices.findEntGeoById(id)
-            .map { oldValue -> ResponseEntity<EntGeo>(oldValue, HttpStatus.OK) }
-            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
-    }
-
-
-    @Operation(summary = "recherche en fonction de id parent")
-    @GetMapping("entgeo/parent/{id}")
+    @Operation(summary = "liste des entites geographiques en fonction du parent id")
+    @GetMapping("entgeos/parent/{id}")
     fun getEntGeosByParent(@PathVariable(value = "id") id: Long, request : HttpServletRequest):  ResponseEntity<Collection<EntGeo>> {
         //verifie sur id existe
         return iServices.findEntGeoById(id)
