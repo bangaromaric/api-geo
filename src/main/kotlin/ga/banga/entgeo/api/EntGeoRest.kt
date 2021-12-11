@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 
-@CrossOrigin(origins = arrayOf("*"))
+@CrossOrigin(origins = ["*"])
 @Tag( name = "EntGeos", description = "Entités geographique") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
 @RequestMapping("api/")
@@ -35,7 +35,7 @@ class EntGeoRest {
             (Content(mediaType = "application/json", array = (
                     ArraySchema(schema = Schema(implementation = EntGeo::class)))))]),
         ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "Did not find any Foos", content = [Content()])]
+        ApiResponse(responseCode = "404", description = "Did not find any entgeo", content = [Content()])]
     )
     @GetMapping("entgeos")
     fun entGeos(): ResponseEntity<Collection<EntGeo>> {
