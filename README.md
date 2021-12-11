@@ -4,8 +4,8 @@
 ## Qu'est-ce que GabonGeo?
 
 GabonGeo fournit une Api dans le but de rechercher et localiser les Provinces, départements et ville du Gabon.
-La documentation de l'API est disponible ici  [GabonGeoDoc](https://gabongeo.herokuapp.com/swagger-ui.html)
-
+La documentation de l'API est disponible ici [GabonGeoDoc](https://gabongeo.herokuapp.com/swagger-ui.html)
+le diagramme de classe est disponible ici [diagramme de classe](https://github.com/bangaromaric/api-geo/blob/main/doc/diagrammes/diagramme_de_classes.png)
 
 ## Exécuter l'Application
 
