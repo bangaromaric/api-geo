@@ -54,8 +54,8 @@ class VilleRest {
     @GetMapping(value = ["ville/nom/{nom}"])
     fun getEntGeosByNomContaining(@Parameter(description = "nom de la ville")
                                   @PathVariable nom: String): Collection<EntGeo> {
-        val type: TypeEntGeo = iServices.findTypeEntGeoByNom("Ville").orElseThrow()
-        return iServices.findEntGeosByNomContaining(nom, type)
+        return iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,"Ville")
+
     }
 
 }

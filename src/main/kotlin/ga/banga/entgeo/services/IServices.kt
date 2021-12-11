@@ -34,6 +34,7 @@ interface IServices {
     fun findByIdAndTypeEntGeo_Nom(id: Long, nom: String): Optional<EntGeo>
 
     fun findByTypeEntGeo_Nom(nom: String): Collection<EntGeo>
-    
+
+    fun findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom: String, nomTypeEntGeo : String): Collection<EntGeo>
     
 }

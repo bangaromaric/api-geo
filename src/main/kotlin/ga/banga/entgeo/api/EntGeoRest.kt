@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest
 
 
 @CrossOrigin(origins = ["*"])
-@Tag( name = "Utilitaires", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
+@Tag( name = "Utilitaire", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
 @RequestMapping("api/")
 class EntGeoRest {

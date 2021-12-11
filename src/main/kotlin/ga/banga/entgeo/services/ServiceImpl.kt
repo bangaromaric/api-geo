@@ -74,4 +74,8 @@ class ServiceImpl : IServices {
     override fun findByTypeEntGeo_Nom(nom: String): Collection<EntGeo> {
         return entGeoRepository.findByTypeEntGeo_Nom(nom)
     }
+
+    override fun findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom: String, nomTypeEntGeo: String): Collection<EntGeo> {
+       return entGeoRepository.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,nomTypeEntGeo)
+    }
 }
