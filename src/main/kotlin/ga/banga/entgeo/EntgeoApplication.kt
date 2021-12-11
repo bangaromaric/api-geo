@@ -28,10 +28,10 @@ class EntgeoApplication : CommandLineRunner {
     override fun run(vararg args: String?) {
 
         val prof = environment.activeProfiles
-        if (prof[0] == "dev") {
+//        if (prof[0] == "dev") {
             insertTypeEntGeo()
             insertEntGeo()
-        }
+//        }
 
 
     }
