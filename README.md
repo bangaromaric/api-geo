@@ -20,6 +20,6 @@ Nous vous encourageons à contribuer à GabonGeo, veuillez consulter le [CONTRIB
 Vous essayez de signaler une possible faille de sécurité dans GabonGeo ? Veuillez consulter notre [security policy](https://github.com/bangaromaric/api-geo/blob/SECURITY.md) pour obtenir des directives sur la façon de procéder.
 ## License
 
-GabonGeo est sous la [License GPL2](https://opensource.org/licenses/GPL-2.0).
+GabonGeo est sous la [License GPL3](https://opensource.org/licenses/GPL-3.0).
 
 Copyright (c) 2021, Romaric **BANGA**
