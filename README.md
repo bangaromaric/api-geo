@@ -14,13 +14,9 @@ Pour exécuter l'application, exécutez la commande suivante dans une fenêtre d
 
 ## Contributing
 
-We encourage you to contribute to API, Please check out the [CONTRIBUTING](https://github.com/bangaromaric/api-geo/CONTRIBUTING.md)
+Nous vous encourageons à contribuer à GeoAPI, veuillez consulter le [CONTRIBUTING.md](https://github.com/bangaromaric/api-geo/blob/main/CONTRIBUTING.md)
 
-Trying to report a possible security vulnerability in Rails? Please
-check out our [security policy](https://github.com/bangaromaric/api-geo/SECURITY.md) for
-guidelines about how to proceed.
-
-
+Vous essayez de signaler une possible faille de sécurité dans GeoAPI ? Veuillez consulter notre [security policy](https://github.com/bangaromaric/api-geo/blob/SECURITY.md) pour obtenir des directives sur la façon de procéder.
 ## License
 
 GeoApi est sous la [License GPL2](https://opensource.org/licenses/GPL-2.0).
