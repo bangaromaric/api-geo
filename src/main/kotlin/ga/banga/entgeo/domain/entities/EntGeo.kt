@@ -11,8 +11,7 @@ import javax.persistence.*
 @Entity
 data class EntGeo(
     @Id @GeneratedValue
-//     val id : UUID = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
-     val id : Long = 0,
+    val id : Long = 0,
     var nom : String,
     @ManyToOne
      var parent : EntGeo? = null,

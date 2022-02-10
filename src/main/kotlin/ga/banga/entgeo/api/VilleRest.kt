@@ -1,8 +1,8 @@
 package ga.banga.entgeo.api
 
 import ga.banga.entgeo.domain.entities.EntGeo
-import ga.banga.entgeo.domain.entities.TypeEntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
+import ga.banga.entgeo.domain.mapper.EntGeoMapper
 import ga.banga.entgeo.services.IServices
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -27,6 +27,9 @@ class VilleRest {
     @Autowired
     lateinit var iServices: IServices
 
+    @Autowired
+    lateinit var entGeoMapper: EntGeoMapper
+
 
     @Operation(summary = "Liste des villes", description = "") //it description of api
     @ApiResponses(value = [
@@ -37,24 +40,25 @@ class VilleRest {
         ApiResponse(responseCode = "404", description = "Did not find any ville", content = [Content()])]
     )
     @GetMapping("villes")
-    fun getDepartement(): Collection<EntGeo> {
-        return iServices.findByTypeEntGeo_Nom("Ville")
+    fun getDepartement(@RequestParam(defaultValue ="true or false") parent: Boolean = false): Collection<Any> {
+        return if (parent) iServices.findByTypeEntGeo_Nom("Ville") else entGeoMapper.entGeosToEntGeosDto(iServices.findByTypeEntGeo_Nom("Ville"))
     }
 
     @Operation(summary = "recherche par id")
     @GetMapping("ville/{id}")
     fun getEntGeoById(@Parameter(description = "son id")
-                      @PathVariable(value = "id") id: Long, request : HttpServletRequest): ResponseEntity<EntGeo> {
+                      @PathVariable(value = "id") id: Long, @RequestParam(defaultValue ="true or false") parent: Boolean = false): ResponseEntity<Any> {
         return iServices.findByIdAndTypeEntGeo_Nom(id,"Ville")
-            .map { oldValue -> ResponseEntity<EntGeo>(oldValue, HttpStatus.OK) }
+            .map { oldValue -> if (parent) ResponseEntity<Any>(oldValue, HttpStatus.OK) else ResponseEntity<Any>(entGeoMapper.entGeoToEntGeoDto(oldValue), HttpStatus.OK) }
             .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
     }
 
     @Operation(summary = "rechercher par le nom de la ville")
     @GetMapping(value = ["ville/nom/{nom}"])
     fun getEntGeosByNomContaining(@Parameter(description = "nom de la ville")
-                                  @PathVariable nom: String): Collection<EntGeo> {
-        return iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,"Ville")
+                                  @PathVariable nom: String,
+                                  @RequestParam(defaultValue ="true or false") parent: Boolean = false): Collection<Any> {
+        return if (parent) iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,"Ville") else entGeoMapper.entGeosToEntGeosDto(iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,"Ville"))
 
     }
 
