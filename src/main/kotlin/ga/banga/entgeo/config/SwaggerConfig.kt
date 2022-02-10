@@ -24,12 +24,19 @@ class SwaggerConfig {
 //    }
 
     @Bean
-    fun publicApi(): GroupedOpenApi {
+    fun publicApiV1(): GroupedOpenApi {
         return GroupedOpenApi.builder()
-            .group("gabon-geo-public")
-            .pathsToMatch("/api/**")
+            .group("gabon-geo-v1")
+            .pathsToMatch("/api/v1/**")
             .build()
     }
+//    @Bean
+//    fun publicApiV2(): GroupedOpenApi {
+//        return GroupedOpenApi.builder()
+//            .group("gabon-geo-v2")
+//            .pathsToMatch("/api/v2/**")
+//            .build()
+//    }
 
 //    @Bean
 //    fun adminApi(): GroupedOpenApi {

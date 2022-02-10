@@ -1,4 +1,4 @@
-package ga.banga.entgeo.api
+package ga.banga.entgeo.api.v1
 
 import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest
 @CrossOrigin(origins = ["*"])
 @Tag( name = "Ville", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/v1/")
 class VilleRest {
     @Autowired
     lateinit var iServices: IServices
@@ -50,7 +50,7 @@ class VilleRest {
                       @PathVariable(value = "id") id: Long, @RequestParam(defaultValue ="true or false") parent: Boolean = false): ResponseEntity<Any> {
         return iServices.findByIdAndTypeEntGeo_Nom(id,"Ville")
             .map { oldValue -> if (parent) ResponseEntity<Any>(oldValue, HttpStatus.OK) else ResponseEntity<Any>(entGeoMapper.entGeoToEntGeoDto(oldValue), HttpStatus.OK) }
-            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
+            .orElseThrow { ResourceNotFoundException("Ville non trouvée avec comme id: $id") }
     }
 
     @Operation(summary = "rechercher par le nom de la ville")

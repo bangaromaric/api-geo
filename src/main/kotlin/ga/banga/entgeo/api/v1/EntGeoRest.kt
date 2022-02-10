@@ -1,16 +1,10 @@
-package ga.banga.entgeo.api
+package ga.banga.entgeo.api.v1
 
 import ga.banga.entgeo.domain.entities.EntGeo
-import ga.banga.entgeo.domain.entities.TypeEntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
+import ga.banga.entgeo.domain.mapper.EntGeoMapper
 import ga.banga.entgeo.services.IServices
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.media.ArraySchema
-import io.swagger.v3.oas.annotations.media.Content
-import io.swagger.v3.oas.annotations.media.Schema
-import io.swagger.v3.oas.annotations.responses.ApiResponse
-import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -22,10 +16,13 @@ import javax.servlet.http.HttpServletRequest
 @CrossOrigin(origins = ["*"])
 @Tag( name = "Utilitaire", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/v1/")
 class EntGeoRest {
     @Autowired
     lateinit var iServices: IServices
+
+    @Autowired
+    lateinit var entGeoMapper: EntGeoMapper
 
 
 
@@ -69,17 +66,18 @@ class EntGeoRest {
 
     @Operation(summary = "liste des entites geographiques en fonction du parent id")
     @GetMapping("entgeos/parent/{id}")
-    fun getEntGeosByParent(@PathVariable(value = "id") id: Long, request : HttpServletRequest):  ResponseEntity<Collection<EntGeo>> {
+    fun getEntGeosByParent(@PathVariable(value = "id") id: Long,
+                           @RequestParam(defaultValue ="true or false") parent: Boolean = false):  ResponseEntity<Collection<Any>> {
         //verifie sur id existe
         return iServices.findEntGeoById(id)
             .map { oldValue ->
-                  val result =  iServices.findEntGeosByParent(oldValue)
+                  val result = if (parent) iServices.findEntGeosByParent(oldValue) else entGeoMapper.entGeosToEntGeosDto(iServices.findEntGeosByParent(oldValue))
                 if (result.isNotEmpty())
-                    ResponseEntity<Collection<EntGeo>>(result, HttpStatus.OK)
+                    ResponseEntity<Collection<Any>>(result, HttpStatus.OK)
                 else
-                    ResponseEntity<Collection<EntGeo>>(null, HttpStatus.NO_CONTENT)
+                    ResponseEntity<Collection<Any>>(HttpStatus.NO_CONTENT)
             }
-            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
+            .orElseThrow { ResourceNotFoundException("Ressource non trouvée avec comme id: $id") }
     }
 
 

@@ -1,8 +1,9 @@
-package ga.banga.entgeo.api
+package ga.banga.entgeo.api.v1
 
 import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.entities.TypeEntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
+import ga.banga.entgeo.domain.mapper.EntGeoMapper
 import ga.banga.entgeo.services.IServices
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -22,10 +23,13 @@ import javax.servlet.http.HttpServletRequest
 @CrossOrigin(origins = ["*"])
 @Tag( name = "Province", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/v1/")
 class ProvinceRest {
     @Autowired
     lateinit var iServices: IServices
+
+    @Autowired
+    lateinit var entGeoMapper: EntGeoMapper
 
 
     @Operation(summary = "Liste des Provinces", description = "") //it description of api
@@ -37,17 +41,18 @@ class ProvinceRest {
         ApiResponse(responseCode = "404", description = "Did not find any Province", content = [Content()])]
     )
     @GetMapping("provinces")
-    fun getProvinces(): Collection<EntGeo> {
-        return iServices.findByTypeEntGeo_Nom("Province")
+    fun getProvinces(@RequestParam(defaultValue ="true or false") parent: Boolean = false): Collection<Any> {
+        return if (parent) iServices.findByTypeEntGeo_Nom("Province") else entGeoMapper.entGeosToEntGeosDto(iServices.findByTypeEntGeo_Nom("Province"))
     }
 
     @Operation(summary = "recherche par id")
     @GetMapping("province/{id}")
     fun getEntGeoById(@Parameter(description = "son id")
-                      @PathVariable(value = "id") id: Long, request : HttpServletRequest): ResponseEntity<EntGeo> {
+                      @PathVariable(value = "id") id: Long,
+                      @RequestParam(defaultValue ="true or false") parent: Boolean = false): ResponseEntity<Any> {
         return iServices.findByIdAndTypeEntGeo_Nom(id,"Province")
-            .map { oldValue -> ResponseEntity<EntGeo>(oldValue, HttpStatus.OK) }
-            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
+            .map { oldValue ->  if (parent)  ResponseEntity<Any>(oldValue, HttpStatus.OK) else ResponseEntity<Any>(entGeoMapper.entGeoToEntGeoDto(oldValue) , HttpStatus.OK)  }
+            .orElseThrow { ResourceNotFoundException("Province non trouvée avec comme id: $id") }
     }
 
 }
