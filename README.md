@@ -17,9 +17,9 @@ Pour exécuter l'application, exécutez la commande suivante dans une fenêtre d
 
 ## Contributing
 
-Nous vous encourageons à contribuer à GabonGeo, veuillez consulter le [CONTRIBUTING.md](https://github.com/bangaromaric/api-geo/blob/main/CONTRIBUTING.md)
+Nous vous encourageons à contribuer à GabonGeo, veuillez consulter le [CONTRIBUTING.md](CONTRIBUTING.md)
 
-Vous essayez de signaler une possible faille de sécurité dans GabonGeo ? Veuillez consulter notre [security policy](https://github.com/bangaromaric/api-geo/blob/SECURITY.md) pour obtenir des directives sur la façon de procéder.
+Vous essayez de signaler une possible faille de sécurité dans GabonGeo ? Veuillez consulter notre [security policy](SECURITY.md) pour obtenir des directives sur la façon de procéder.
 ## License
 
 GabonGeo est sous la [License GPL3](https://opensource.org/licenses/GPL-3.0).
