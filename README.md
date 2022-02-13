@@ -7,6 +7,8 @@ GabonGeo fournit une Api dans le but de rechercher et localiser les Provinces, d
 
 La documentation de l'API est disponible ici [GabonGeoDoc](https://gabongeo.herokuapp.com/swagger-ui.html)
 
+La KDoc est disponible ici [KDoc](docs/apidocs/index.md)
+
 Le diagramme de classe est disponible ici [diagramme de classe](https://github.com/bangaromaric/api-geo/blob/main/doc/diagrammes/diagramme_de_classes.png)
 
 ## Exécuter l'Application
