@@ -12,7 +12,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
-
+/**
+ * Cette classe est responsable de l'affichage des villes
+ * @author Romaric BANGA
+ * @since 2/13/22
+ * @version 1.0
+ */
 @CrossOrigin(origins = ["*"])
 @Tag( name = "Utilitaire", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
@@ -64,6 +69,13 @@ class EntGeoRest {
 //    }
 
 
+
+    /**
+     * Cette methode permet de lister des entites geographiques en fonction du parent id.
+     *
+     * [parent] donne la possibilite de specifier si les parents sont inclues dans le retour.
+     * @return une collection d'entgeo ou entgeoDto
+     */
     @Operation(summary = "liste des entites geographiques en fonction du parent id")
     @GetMapping("entgeos/parent/{id}")
     fun getEntGeosByParent(@PathVariable(value = "id") id: Long,

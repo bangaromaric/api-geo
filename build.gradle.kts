@@ -7,6 +7,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.github.johnrengelman.processes") version "0.5.0"
     id("org.springdoc.openapi-gradle-plugin") version "1.3.3"
+    id("org.jetbrains.dokka") version "1.6.10"
     kotlin("jvm") version "1.6.0"
     kotlin("plugin.spring") version "1.6.0"
     kotlin("plugin.jpa") version "1.5.21"
@@ -22,6 +23,7 @@ configurations {
         extendsFrom(configurations.annotationProcessor.get())
     }
 }
+
 
 
 repositories {
@@ -54,6 +56,9 @@ dependencies {
 
 
     runtimeOnly("org.postgresql:postgresql:42.3.1")
+
+    //Dokka plugin creates Gradle configuration for each output format in the form of dokka${format}Plugin:
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.6")
 }

@@ -19,7 +19,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
-
+/**
+ * Cette classe est responsable de l'affichage des villes
+ * @author Romaric BANGA
+ * @since 2/13/22
+ * @version 1.0
+ */
 @CrossOrigin(origins = ["*"])
 @Tag( name = "Département", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
@@ -32,6 +37,12 @@ class DepartementRest {
     lateinit var entGeoMapper: EntGeoMapper
 
 
+    /**
+     * Cette methode est utilisee pour retouner toutes les departements avec parent ou non.
+     *
+     * [parent] donne la possibilite de specifier si les parents sont inclues dans le retour.
+     * @return une collection d'entgeo ou entgeoDto
+     */
     @Operation(summary = "Liste des departements", description = "") //it description of api
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "departement trouvées", content = [
@@ -45,6 +56,11 @@ class DepartementRest {
         return if (parent) iServices.findByTypeEntGeo_Nom("Département") else entGeoMapper.entGeosToEntGeosDto(iServices.findByTypeEntGeo_Nom("Département"))
     }
 
+    /**
+     * Cette methode est utilisee pour retouner une departements en fonction de son ID.
+     * [parent] donne la possibilite de specifier si les parents sont inclues dans le retour.
+     * @return une collection d'entgeo ou entgeoDto
+     */
     @Operation(summary = "recherche par id")
     @GetMapping("departement/{id}")
     fun getEntGeoById(@Parameter(description = "son id")
