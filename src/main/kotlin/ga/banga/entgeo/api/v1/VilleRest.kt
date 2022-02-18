@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 
 /**
  * Cette classe est responsable de l'affichage des villes
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServletRequest
  * @version 1.0
  */
 @CrossOrigin(origins = ["*"])
-@Tag( name = "Ville", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
+@Tag(name = "Ville", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
 @RequestMapping("api/v1/")
 class VilleRest {
@@ -50,16 +49,25 @@ class VilleRest {
      * @return une collection d'entgeo ou entgeoDto
      */
     @Operation(summary = "Liste des villes", description = "") //it description of api
-    @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "ville trouvées", content = [
-            (Content(mediaType = "application/json", array = (
-                    ArraySchema(schema = Schema(implementation = EntGeo::class)))))]),
-        ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "Did not find any ville", content = [Content()])]
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "ville trouvées", content = [
+                    (Content(
+                        mediaType = "application/json", array = (
+                                ArraySchema(schema = Schema(implementation = EntGeo::class)))
+                    ))]
+            ),
+            ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
+            ApiResponse(responseCode = "404", description = "Did not find any ville", content = [Content()])]
     )
     @GetMapping("villes")
-    fun getVilles(@RequestParam(defaultValue ="true or false") parent: Boolean = false): Collection<Any> {
-        return if (parent) iServices.findByTypeEntGeo_Nom("Ville") else entGeoMapper.entGeosToEntGeosDto(iServices.findByTypeEntGeo_Nom("Ville"))
+    fun getVilles(@RequestParam(defaultValue = "true or false") parent: Boolean = false): Collection<Any> {
+        return if (parent) iServices.findByTypeEntGeo_Nom("Ville") else entGeoMapper.entGeosToEntGeosDto(
+            iServices.findByTypeEntGeo_Nom(
+                "Ville"
+            )
+        )
     }
 
     /**
@@ -69,10 +77,17 @@ class VilleRest {
      */
     @Operation(summary = "recherche par id")
     @GetMapping("ville/{id}")
-    fun getVilleById(@Parameter(description = "son id")
-                      @PathVariable(value = "id") id: Long, @RequestParam(defaultValue ="true or false") parent: Boolean = false): ResponseEntity<Any> {
-        return iServices.findByIdAndTypeEntGeo_Nom(id,"Ville")
-            .map { oldValue -> if (parent) ResponseEntity<Any>(oldValue, HttpStatus.OK) else ResponseEntity<Any>(entGeoMapper.entGeoToEntGeoDto(oldValue), HttpStatus.OK) }
+    fun getVilleById(
+        @Parameter(description = "son id")
+        @PathVariable(value = "id") id: Long, @RequestParam(defaultValue = "true or false") parent: Boolean = false
+    ): ResponseEntity<Any> {
+        return iServices.findByIdAndTypeEntGeo_Nom(id, "Ville")
+            .map { oldValue ->
+                if (parent) ResponseEntity<Any>(oldValue, HttpStatus.OK) else ResponseEntity<Any>(
+                    entGeoMapper.entGeoToEntGeoDto(oldValue),
+                    HttpStatus.OK
+                )
+            }
             .orElseThrow { ResourceNotFoundException("Ville non trouvée avec comme id: $id") }
     }
 
@@ -83,10 +98,15 @@ class VilleRest {
      */
     @Operation(summary = "rechercher par le nom de la ville")
     @GetMapping(value = ["ville/nom/{nom}"])
-    fun getVilleByNomContaining(@Parameter(description = "nom de la ville")
-                                  @PathVariable nom: String,
-                                  @RequestParam(defaultValue ="true or false") parent: Boolean = false): Collection<Any> {
-        return if (parent) iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,"Ville") else entGeoMapper.entGeosToEntGeosDto(iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom,"Ville"))
+    fun getVilleByNomContaining(
+        @Parameter(description = "nom de la ville")
+        @PathVariable nom: String,
+        @RequestParam(defaultValue = "true or false") parent: Boolean = false
+    ): Collection<Any> {
+        return if (parent) iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(
+            nom,
+            "Ville"
+        ) else entGeoMapper.entGeosToEntGeosDto(iServices.findByNomContainingIgnoreCaseAndTypeEntGeo_Nom(nom, "Ville"))
 
     }
 

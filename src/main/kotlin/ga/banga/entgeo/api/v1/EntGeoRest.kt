@@ -1,6 +1,5 @@
 package ga.banga.entgeo.api.v1
 
-import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
 import ga.banga.entgeo.domain.mapper.EntGeoMapper
 import ga.banga.entgeo.services.IServices
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 
 /**
  * Cette classe est responsable de l'affichage des villes
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpServletRequest
  * @version 1.0
  */
 @CrossOrigin(origins = ["*"])
-@Tag( name = "Utilitaire", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
+@Tag(name = "Utilitaire", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
 @RequestMapping("api/v1/")
 class EntGeoRest {
@@ -28,7 +26,6 @@ class EntGeoRest {
 
     @Autowired
     lateinit var entGeoMapper: EntGeoMapper
-
 
 
 //    @Operation(summary = "Liste EntGeos", description = "Permet de lister les pays, province") //it description of api
@@ -69,7 +66,6 @@ class EntGeoRest {
 //    }
 
 
-
     /**
      * Cette methode permet de lister des entites geographiques en fonction du parent id.
      *
@@ -78,12 +74,16 @@ class EntGeoRest {
      */
     @Operation(summary = "liste des entites geographiques en fonction du parent id")
     @GetMapping("entgeos/parent/{id}")
-    fun getEntGeosByParent(@PathVariable(value = "id") id: Long,
-                           @RequestParam(defaultValue ="true or false") parent: Boolean = false):  ResponseEntity<Collection<Any>> {
+    fun getEntGeosByParent(
+        @PathVariable(value = "id") id: Long,
+        @RequestParam(defaultValue = "true or false") parent: Boolean = false
+    ): ResponseEntity<Collection<Any>> {
         //verifie sur id existe
         return iServices.findEntGeoById(id)
             .map { oldValue ->
-                  val result = if (parent) iServices.findEntGeosByParent(oldValue) else entGeoMapper.entGeosToEntGeosDto(iServices.findEntGeosByParent(oldValue))
+                val result = if (parent) iServices.findEntGeosByParent(oldValue) else entGeoMapper.entGeosToEntGeosDto(
+                    iServices.findEntGeosByParent(oldValue)
+                )
                 if (result.isNotEmpty())
                     ResponseEntity<Collection<Any>>(result, HttpStatus.OK)
                 else
@@ -91,9 +91,6 @@ class EntGeoRest {
             }
             .orElseThrow { ResourceNotFoundException("Ressource non trouvée avec comme id: $id") }
     }
-
-
-
 
 
 //    @ApiOperation(value = "Ajout d'un EntGeo")
@@ -104,35 +101,35 @@ class EntGeoRest {
 //    }
 
 //    @ApiOperation(value = "modification d'un EntGeo")
- /*   @PutMapping(value = ["entgeo/{id}"])
-    fun updateEntGeo(
-        @PathVariable(value = "id") uuid: UUID,
-        @RequestBody newObject: @Valid EntGeo
-    ): ResponseEntity<EntGeo> {
-        return iServices.findEntGeoById(uuid)
-            .map { oldValue ->
-                oldValue.nom = newObject.nom
-                oldValue.parent = newObject.parent
-                oldValue.typeEntGeo = newObject.typeEntGeo
-                iServices.insertEntGeo(oldValue)
-                ResponseEntity<EntGeo>(oldValue, HttpStatus.OK)
-            }
-            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $uuid") }
-    }
+    /*   @PutMapping(value = ["entgeo/{id}"])
+       fun updateEntGeo(
+           @PathVariable(value = "id") uuid: UUID,
+           @RequestBody newObject: @Valid EntGeo
+       ): ResponseEntity<EntGeo> {
+           return iServices.findEntGeoById(uuid)
+               .map { oldValue ->
+                   oldValue.nom = newObject.nom
+                   oldValue.parent = newObject.parent
+                   oldValue.typeEntGeo = newObject.typeEntGeo
+                   iServices.insertEntGeo(oldValue)
+                   ResponseEntity<EntGeo>(oldValue, HttpStatus.OK)
+               }
+               .orElseThrow { ResourceNotFoundException("Ressource not found on :: $uuid") }
+       }
 
-  */
+     */
 
 //    @ApiOperation(value = "suppression d'un EntGeo")
- /*   @DeleteMapping(value = ["entgeo/{id}"])
-    fun delEntGeo(@PathVariable id: UUID): ResponseEntity<String> {
-        return iServices.findEntGeoById(id)
-            .map { entGeo ->
-                iServices.deleteEntGeoById(id)
-                ResponseEntity<String>("ok", HttpStatus.OK)
-            }
-            .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
-    }
+    /*   @DeleteMapping(value = ["entgeo/{id}"])
+       fun delEntGeo(@PathVariable id: UUID): ResponseEntity<String> {
+           return iServices.findEntGeoById(id)
+               .map { entGeo ->
+                   iServices.deleteEntGeoById(id)
+                   ResponseEntity<String>("ok", HttpStatus.OK)
+               }
+               .orElseThrow { ResourceNotFoundException("Ressource not found on :: $id") }
+       }
 
-  */
+     */
 }
 

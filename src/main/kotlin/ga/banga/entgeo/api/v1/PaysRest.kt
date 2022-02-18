@@ -1,7 +1,6 @@
 package ga.banga.entgeo.api.v1
 
 import ga.banga.entgeo.domain.entities.EntGeo
-import ga.banga.entgeo.domain.entities.TypeEntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
 import ga.banga.entgeo.services.IServices
 import io.swagger.v3.oas.annotations.Operation
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServletRequest
  * @version 1.0
  */
 @CrossOrigin(origins = ["*"])
-@Tag( name = "Pays", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
+@Tag(name = "Pays", description = "") // it description of api at top  http://localhost:8080/swagger-ui.html
 @RestController
 @RequestMapping("api/v1/")
 class PaysRest {
@@ -40,12 +39,17 @@ class PaysRest {
      * @return une collection d'entgeo ou entgeoDto
      */
     @Operation(summary = "Liste des pays", description = "") //it description of api
-    @ApiResponses(value = [
-        ApiResponse(responseCode = "200", description = "pays trouvés", content = [
-            (Content(mediaType = "application/json", array = (
-                    ArraySchema(schema = Schema(implementation = EntGeo::class)))))]),
-        ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "Did not find any Pays", content = [Content()])]
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "pays trouvés", content = [
+                    (Content(
+                        mediaType = "application/json", array = (
+                                ArraySchema(schema = Schema(implementation = EntGeo::class)))
+                    ))]
+            ),
+            ApiResponse(responseCode = "400", description = "Bad request", content = [Content()]),
+            ApiResponse(responseCode = "404", description = "Did not find any Pays", content = [Content()])]
     )
     @GetMapping("pays")
     fun getPays(): Collection<EntGeo> {
@@ -60,9 +64,11 @@ class PaysRest {
      */
     @Operation(summary = "recherche par id")
     @GetMapping("pays/{id}")
-    fun getPaysById(@Parameter(description = "son id")
-                      @PathVariable(value = "id") id: Long, request : HttpServletRequest): ResponseEntity<EntGeo> {
-        return iServices.findByIdAndTypeEntGeo_Nom(id,"Pays")
+    fun getPaysById(
+        @Parameter(description = "son id")
+        @PathVariable(value = "id") id: Long, request: HttpServletRequest
+    ): ResponseEntity<EntGeo> {
+        return iServices.findByIdAndTypeEntGeo_Nom(id, "Pays")
             .map { oldValue -> ResponseEntity<EntGeo>(oldValue, HttpStatus.OK) }
             .orElseThrow { ResourceNotFoundException("Pays non trouvé avec comme id: $id") }
     }
