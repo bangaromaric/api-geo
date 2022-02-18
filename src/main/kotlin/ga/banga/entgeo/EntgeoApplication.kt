@@ -2,7 +2,7 @@ package ga.banga.entgeo
 
 import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.entities.TypeEntGeo
-import ga.banga.entgeo.services.IServices
+import ga.banga.entgeo.domain.services.IServices
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration

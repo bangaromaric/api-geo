@@ -1,4 +1,4 @@
-package ga.banga.entgeo.repositories
+package ga.banga.entgeo.domain.repositories
 
 import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.entities.TypeEntGeo

@@ -1,9 +1,9 @@
-package ga.banga.entgeo.services
+package ga.banga.entgeo.domain.services
 
 import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.entities.TypeEntGeo
-import ga.banga.entgeo.repositories.EntGeoRepository
-import ga.banga.entgeo.repositories.TypeEntGeoRepository
+import ga.banga.entgeo.domain.repositories.EntGeoRepository
+import ga.banga.entgeo.domain.repositories.TypeEntGeoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*

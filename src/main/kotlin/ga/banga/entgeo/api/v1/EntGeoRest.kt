@@ -2,7 +2,7 @@ package ga.banga.entgeo.api.v1
 
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
 import ga.banga.entgeo.domain.mapper.EntGeoMapper
-import ga.banga.entgeo.services.IServices
+import ga.banga.entgeo.domain.services.IServices
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
