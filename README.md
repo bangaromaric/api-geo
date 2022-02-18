@@ -9,7 +9,7 @@ La documentation de l'API est disponible ici [GabonGeoDoc](https://gabongeo.hero
 
 La KDoc est disponible ici [KDoc](docs/apidocs/index.md)
 
-Le diagramme de classe est disponible ici [diagramme de classe](https://github.com/bangaromaric/api-geo/blob/main/doc/diagrammes/diagramme_de_classes.png)
+Le diagramme de classe est disponible ici [diagramme de classe](docs/diagrammes/diagramme_de_classes.png)
 
 ## Exécuter l'Application
 
