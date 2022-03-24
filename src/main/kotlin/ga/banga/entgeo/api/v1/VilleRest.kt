@@ -1,5 +1,6 @@
 package ga.banga.entgeo.api.v1
 
+import ga.banga.entgeo.domain.dto.VillePlain
 import ga.banga.entgeo.domain.entities.EntGeo
 import ga.banga.entgeo.domain.exceptions.ResourceNotFoundException
 import ga.banga.entgeo.domain.mapper.EntGeoMapper
@@ -83,10 +84,18 @@ class VilleRest {
     ): ResponseEntity<Any> {
         return iServices.findByIdAndTypeEntGeo_Nom(id, "Ville")
             .map { oldValue ->
-                if (parent) ResponseEntity<Any>(oldValue, HttpStatus.OK) else ResponseEntity<Any>(
-                    entGeoMapper.entGeoToEntGeoDto(oldValue),
-                    HttpStatus.OK
-                )
+                if (parent) ResponseEntity<Any>(oldValue, HttpStatus.OK) else {
+                    val nomVille = oldValue.nom
+                    val departement = oldValue.parent?.nom ?: "Inconnu"
+                    val province = oldValue.parent?.parent?.nom ?: "Inconnu"
+                    val pays = oldValue.parent?.parent?.parent?.nom ?: "Inconnu"
+
+                    ResponseEntity<Any>(VillePlain(oldValue.id, nomVille , departement  , province, pays) , HttpStatus.OK)
+//                    ResponseEntity<Any>(
+//                        entGeoMapper.entGeoToEntGeoDto(oldValue),
+//                        HttpStatus.OK
+//                    )
+                }
             }
             .orElseThrow { ResourceNotFoundException("Ville non trouvée avec comme id: $id") }
     }
