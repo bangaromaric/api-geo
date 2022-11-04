@@ -57,6 +57,8 @@ dependencies {
 
     runtimeOnly("org.postgresql:postgresql:42.3.1")
 
+    runtimeOnly("com.h2database:h2")
+
     //Dokka plugin creates Gradle configuration for each output format in the form of dokka${format}Plugin:
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
 
